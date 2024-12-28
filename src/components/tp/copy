@@ -1,0 +1,415 @@
+// // TEXTPAGE STARTS HERE
+
+// import React, { useState } from "react";
+// import {
+//   Box,
+//   Paper,
+//   Typography,
+//   Button,
+//   Tab,
+//   Tabs,
+//   AppBar,
+//   Container,
+//   Grid,
+// } from "@mui/material";
+// import QuestionNavigator from "../components/TestScreen/QuestionNavigator";
+// import QuestionDisplay from "../components/TestScreen/QuestionDisplay";
+// import TestTimer from "../components/TestScreen/TestTimer";
+// import { Link } from "react-router-dom";
+
+
+// const TestPage = () => {
+    
+//   const [currentTab, setCurrentTab] = useState(0);
+  
+
+//   const handleTabChange = (event, newValue) => {
+//     setCurrentTab(newValue);
+//   };
+//   const displayInstruction =()=>{
+//     alert("set up your instruction here");
+//   }
+  
+ 
+
+//   return (
+//     <Container maxWidth="xl" sx={{ px: 0 }}>
+//       <Box mb={4}>
+//         <AppBar position="static" color="default">
+//           <Container maxWidth="xl">
+//             <Grid container alignItems="center" justifyContent="space-between" px={2}>
+//               <Grid item>
+//                 <Typography variant="h5">Logo</Typography>
+//               </Grid>
+//               <Grid item>
+//                 <Typography variant="h6" fontWeight={700}>
+//                   <TestTimer duration={60*60} />
+//                 </Typography>
+//               </Grid>
+//             </Grid>
+//           </Container>
+//         </AppBar>
+//       </Box>
+//       <Grid container alignItems="stretch" >
+//         <Grid item xs={12} md={3} sx={{ backgroundColor: "#E2E5DE", maxHeight: "100vh" }}>
+//           <Box p={2}>
+//             <Typography variant="h6" fontWeight={600} mb={2}>
+//               Question Overview:
+//             </Typography>
+//             <Box sx={{
+//               maxHeight: 300,
+//               overflowY: "scroll",
+              
+//               "&::-webkit-scrollbar": {
+//                 width: "10px",
+//               },
+//               "&::-webkit-scrollbar-thumb": {
+//                 backgroundColor: "#0000FF",
+//                 borderRadius: "10px",
+//               },
+//               "&::-webkit-scrollbar-thumb:hover": {
+//                 backgroundColor: "#000066",
+//               },
+//               "&::-webkit-scrollbar-track": {
+//                 backgroundColor: "#F5F5F5",
+//                 borderRadius: "10px",
+//               },
+//             }}>
+//               <QuestionNavigator />
+//                <QuestionNavigator />
+//               <QuestionNavigator />
+//               <QuestionNavigator />
+//               <QuestionNavigator />
+//               <QuestionNavigator />
+//               <QuestionNavigator />
+//               <QuestionNavigator />
+//               <QuestionNavigator />
+//               <QuestionNavigator />
+//               <QuestionNavigator />
+//               <QuestionNavigator />
+//               <QuestionNavigator />
+//               <QuestionNavigator />
+//               <QuestionNavigator />
+//               <QuestionNavigator />
+//               <QuestionNavigator />
+//               <QuestionNavigator /> 
+              
+//               {/* Add more QuestionNavigators here */}
+//             </Box>
+//             <Box mt={2}>
+//               <Typography variant="body1">No Of Questions Attempted :</Typography>
+//               <Typography variant="body1">No Of Questions Not Attempted :</Typography>
+//               <Typography variant="body1">No Of Questions To Be Reviewed :</Typography>
+//             </Box>
+            
+
+//                <Box display="flex" justifyContent="center" mt={3}>
+//             <Button variant="contained" color="inherit" sx={{ width: '100%', maxWidth: 400 ,backgroundColor:"white",color:"black"}} onClick={displayInstruction} >
+//               Instructions
+//             </Button>
+//           </Box>
+            
+//             <Box display="flex" justifyContent="center" mt={3}>
+//             <Button variant="contained" color="success" sx={{ width: '100%', maxWidth: 400 }} >
+//               <Link to="/result" style={{textDecoration:"none",color:"black"}} >Finish Test</Link>
+//             </Button>
+//           </Box>
+//           </Box>
+          
+//         </Grid>
+//         <Grid item xs={12} md={9}>
+//           <Paper elevation={3} sx={{ mb: 3, px:4, py: 3}}>
+//             <Tabs value={currentTab} onChange={handleTabChange} sx={{ mb: 3 ,marginTop:"-1rem"}}>
+//               <Tab label="Section 1" />
+//               <Tab label="Section 2" />
+//               <Tab label="Section 3" />
+//               <Tab label="Section 4" />
+//             </Tabs>
+//             {currentTab === 0 && <QuestionDisplay currentQuestionIndex={0} />}
+//             {currentTab === 1 && <QuestionDisplay currentQuestionIndex={1} />}
+//             {currentTab === 2 && <QuestionDisplay currentQuestionIndex={2} />}
+//             {currentTab === 3 && <QuestionDisplay currentQuestionIndex={3} />}
+//           </Paper>
+//           <Box display='flex' gap={1} justifyContent="center">
+//           <Button variant="contained" color="warning" >
+//               Privious
+//             </Button>
+//             <Button variant="contained" color="primary" >
+//               Next
+//             </Button>
+//             <Button variant="contained" color="error" >
+//               Clear Selection
+//             </Button>
+
+//           </Box>
+          
+//         </Grid>
+        
+//       </Grid>
+//     </Container>
+//   );
+// };
+
+// export default TestPage;
+// // TEXTPAGE ENDS HERE
+
+
+
+
+
+
+// // QuestionDisplay STARTS HERE
+// import React, { useContext } from 'react';
+// import { Typography, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel } from '@mui/material';
+// import TestContext from '../../Context/testContext';
+
+// const QuestionDisplay = () => {
+//   const { questions, currentQuestionIndex } = useContext(TestContext);
+//   const currentQuestion = questions[currentQuestionIndex];
+
+//   return (
+//     <FormControl component="fieldset">
+//       <FormLabel component="legend" >
+//         <Typography fontWeight={700}>Question {currentQuestionIndex + 1} :</Typography>
+//         <Typography
+//           display='flex'
+//           flexWrap='wrap'
+//           fontWeight={550}
+//           sx={{
+//             wordWrap: 'break-word', // Allow long words to be broken and wrapped
+//             maxWidth: '400px', // Set maximum width to limit the width of the question text
+//           }}
+//         >
+//           {currentQuestion?.text}
+//         </Typography>
+//       </FormLabel>
+//       <RadioGroup name={`question_${currentQuestionIndex}`}>
+//         {currentQuestion?.options.map((option, idx) => (
+//           <FormControlLabel key={idx} value={option} control={<Radio />} label={option} />
+//         ))}
+//       </RadioGroup>
+//     </FormControl>
+//   );
+// };
+
+// export default QuestionDisplay;
+// // QuestionDisplay ENDS HERE
+
+
+
+
+// // QuestionNavigator STARTS HERE
+// import React, { useContext } from 'react';
+// import TestContext from '../../Context/testContext';
+// import { IconButton, Tooltip } from '@mui/material';
+// import { styled } from '@mui/system';
+
+// const CircleDiv = styled('div')({
+//   width: '24px',
+//   height: '24px',
+//   borderRadius: '50%',
+//   display: 'flex',
+//   justifyContent: 'center',
+//   alignItems: 'center',
+//   backgroundColor: '#aeb6bf'
+// });
+
+// const QuestionNavigator = () => {
+//   const {
+//     questions,
+//     selectedAnswers,
+//     markedForReview,
+//   } = useContext(TestContext);
+
+//   const getStatusColor = (questionId) => {
+//     if (markedForReview[questionId]) {
+//       return 'darkblue'; // Question is marked for review
+//     } else if (selectedAnswers[questionId] !== undefined) {
+//       return 'green'; // Question is answered
+//     } else if (selectedAnswers[questionId] === undefined) {
+//       return '#F5FEFD'; // Question is unanswered
+//     } else {
+//       return 'black'; // Question is unvisited
+//     }
+//   };
+
+//   return (
+//     <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '.7rem' }}>
+//   {questions.map((question, index) => (
+//     <Tooltip key={question.id} title={`Question ${index + 1}`} arrow>
+//       <IconButton>
+//         <CircleDiv style={{ color: getStatusColor(question.id), fontSize: '15px' }}>
+//           {index + 1} {/* Question number as the child */}
+//         </CircleDiv>
+//       </IconButton>
+//     </Tooltip>
+//   ))}
+// </div>
+
+//   );
+// };
+
+// export default QuestionNavigator;
+
+
+// // QuestionNavigator ENDS HERE
+
+
+// // TextCOntext START HERE
+// import React, { createContext, useState, useCallback } from 'react';
+
+// export const TestContext = createContext();
+
+// // Dummy data for questions
+// const dummyQuestions = [
+//   {
+//     id: 1,
+//     section: 1,
+//     text: 'What is React sushanat walunj is my name, and x=20 y=40?',
+//     options: ['Library', 'Framework', 'Language', 'All of the above'],
+//     correctAnswer: 'Library'
+//   },
+//   {
+//     id: 2,
+//     section: 1,
+//     text: 'Who maintains React?',
+//     options: ['Google', 'Facebook', 'Microsoft', 'Apple'],
+//     correctAnswer: 'Facebook'
+//   },
+//   {
+//     id: 3,
+//     section: 1,
+//     text: 'Who maintains React?',
+//     options: ['Google', 'Facebook', 'Microsoft', 'Apple'],
+//     correctAnswer: 'Facebook'
+//   },
+//   {
+//     id: 4,
+//     section: 1,
+//     text: 'Who maintains React?',
+//     options: ['Google', 'Facebook', 'Microsoft', 'Apple'],
+//     correctAnswer: 'Facebook'
+//   },
+//   {
+//     id: 5,
+//     section: 1,
+//     text: 'Who maintains React?',
+//     options: ['Google', 'Facebook', 'Microsoft', 'Apple'],
+//     correctAnswer: 'Facebook'
+//   },
+//     {
+//       id: 6,
+//       section: 1,
+//       text: 'Who maintains React?',
+//       options: ['Google', 'Facebook', 'Microsoft', 'Apple'],
+//       correctAnswer: 'Facebook'
+//     },
+//   {
+//     id: 7,
+//     section: 1,
+//     text: 'Who maintains React?',
+//     options: ['Google', 'Facebook', 'Microsoft', 'Apple'],
+//     correctAnswer: 'Facebook'
+//   },
+//   {
+//     id: 8,
+//     section: 1,
+//     text: 'Who maintains React?',
+//     options: ['Google', 'Facebook', 'Microsoft', 'Apple'],
+//     correctAnswer: 'Facebook'
+//   },
+//     {
+//       id: 9,
+//       section: 1,
+//       text: 'Who maintains React?',
+//       options: ['Google', 'Facebook', 'Microsoft', 'Apple'],
+//       correctAnswer: 'Facebook'
+//     },
+//   {
+//     id: 10,
+//     section: 1,
+//     text: 'Who maintains React?',
+//     options: ['Google', 'Facebook', 'Microsoft', 'Apple'],
+//     correctAnswer: 'Facebook'
+//   },
+//   // Add more dummy questions as needed
+// ];
+
+// export const TestProvider = ({ children }) => {
+//   // State for all questions fetched from the database
+//   const [questions, setQuestions] = useState(dummyQuestions);
+//   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+//   // State for the current section of the test
+//   const [currentSection, setCurrentSection] = useState(1);
+
+//   // State for the answers selected by the user
+//   const [selectedAnswers, setSelectedAnswers] = useState({});
+
+//   // State for whether a question has been marked for review
+//   const [markedForReview, setMarkedForReview] = useState({});
+
+//   // State for the timer
+//   const [timeRemaining, setTimeRemaining] = useState(null);
+
+//   // Function to select an answer
+//   const selectAnswer = useCallback((questionId, answer) => {
+//     setSelectedAnswers((prevAnswers) => ({
+//       ...prevAnswers,
+//       [questionId]: answer
+//     }));
+//   }, []);
+
+//   // Function to mark a question for review
+//   const markQuestionForReview = useCallback((questionId) => {
+//     setMarkedForReview((prevMarks) => ({
+//       ...prevMarks,
+//       [questionId]: !prevMarks[questionId]
+//     }));
+//   }, []);
+
+//   // Function to change the current section
+//   const changeSection = useCallback((sectionNumber) => {
+//     setCurrentSection(sectionNumber);
+//   }, []);
+
+//   // Function to handle the timer for the test
+//   const setTimer = useCallback((time) => {
+//     setTimeRemaining(time);
+//   }, []);
+
+//   // Function to change the current question index
+//   const changeQuestionIndex = useCallback((index) => {
+//     setCurrentQuestionIndex(index);
+//   }, []);
+
+//   // The value that will be passed down to the components using this context
+//   const contextValue = {
+//     questions,
+//     currentSection,
+//     currentQuestionIndex,
+//     selectedAnswers,
+//     markedForReview,
+//     timeRemaining,
+//     setQuestions,
+//     setCurrentSection,
+//     setSelectedAnswers,
+//     setMarkedForReview,
+//     setTimer,
+//     selectAnswer,
+//     markQuestionForReview,
+//     changeSection,
+//     changeQuestionIndex,
+//   };
+
+//   return (
+//     <TestContext.Provider value={contextValue}>
+//       {children}
+//     </TestContext.Provider>
+//   );
+// };
+// export default TestContext;
+// // text COntext ends here
+
+
+
+

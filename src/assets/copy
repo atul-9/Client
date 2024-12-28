@@ -1,0 +1,72 @@
+import React from 'react';
+import { Grid, Typography, Link, TextField, Button, IconButton, Box } from '@mui/material';
+import { Facebook, Twitter, LinkedIn, Instagram } from '@mui/icons-material';
+
+const Footer = () => {
+  return (
+    <footer style={{ backgroundColor: 'white', marginTop: "2rem", padding: "2rem 0", width: "100%" }}>
+      
+        {/* Social links section */}
+        {/* <Box  xs={12} sm={3} md={4} sx={{ textAlign: "center" }}>
+          <Typography variant="h3" gutterBottom>
+            Aptitude
+          </Typography>
+          <IconButton color="primary" aria-label="facebook" >
+            <Facebook sx={{ fontSize: "2.5rem" }} />
+          </IconButton>
+          <IconButton color="primary" aria-label="twitter">
+            <Twitter sx={{ fontSize: "2.5rem" }} />
+          </IconButton>
+          <IconButton color="primary" aria-label="linkedin">
+            <LinkedIn sx={{ fontSize: "2.5rem" }} />
+          </IconButton>
+          <IconButton color="primary" aria-label="linkedin">
+            <Instagram sx={{ fontSize: "2.5rem" }} />
+          </IconButton>
+        </Box> */}
+        {/* About, resources, contact, home links */}
+        {/* <Box  xs={12} sm={3} md={4}  sx={{ marginLeft: { xs: 0, sm: "2rem" ,md:"3rem",lg:"3rem"} }}>
+          <Typography variant="h6" sx={{ fontSize: "1.7rem" }}>
+            <Link href="#">About us</Link>
+          </Typography>
+          <Typography variant="h6" sx={{ fontSize: "1.7rem" }}>
+            <Link href="#">Resources</Link>
+          </Typography>
+          <Typography variant="h6" sx={{ fontSize: "1.7rem" }}>
+            <Link href="#">Home</Link>
+          </Typography>
+          <Typography variant="h6" sx={{ fontSize: "1.7rem" }}>
+            <Link href="#">Contact</Link>
+          </Typography>
+        </Box> */}
+        {/* Blogs link */}
+         {/* <Box  xs={12} sm={3} md={4}  sx={{ marginLeft: { xs: 0, sm: "2rem" ,md:"3rem",lg:"3rem"} }}>
+          <Typography variant="h6" sx={{ fontSize: "2rem" }}>
+            Blogs
+          </Typography>
+          <Typography variant="body2" sx={{ fontSize: "2rem" }}>
+            <Link href="#">Blog 1</Link>
+          </Typography>
+          <Typography variant="body2" sx={{ fontSize: "2rem" }}>
+            <Link href="#">Blog 2</Link>
+          </Typography>
+          <Typography variant="body2" sx={{ fontSize: "2rem" }}>
+            <Link href="#">Blog 3</Link>
+          </Typography>
+        </Box>  */}
+        {/* Newsletter */}
+        {/* <Box    sx={{ marginLeft: { xs: 0, sm: "2rem" ,md:"3rem",lg:"3rem"} }}>
+          <Typography variant="h6" sx={{ fontSize: "2rem" }}>
+            Subscribe to our Newsletter
+          </Typography>
+          <form style={{ display: 'flex', alignItems: 'center' }}>
+            <TextField label="Email" variant="outlined" size="small" style={{ marginRight: '1rem' }} />
+            <Button variant="contained" color="primary">Subscribe</Button>
+          </form>
+        </Box>  */}
+      
+    </footer>
+  );
+};
+
+export default Footer;

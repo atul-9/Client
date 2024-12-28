@@ -1,0 +1,26 @@
+The error message you are encountering suggests there are a couple of issues in your code. Let's address them:
+
+1. **Error in `onClick` Event Handler**:
+   - The warning `Expected 'onClick' listener to be a function, instead got a value of 'string' type` indicates that somewhere in your code (possibly in the sidebar menu items), you are passing a string instead of a function to an `onClick` prop.
+   - Check all the places where you use `onClick` in your components, especially in the sidebar related components (`MenuButtonRef`, `MenuItemFR`, etc.). Ensure that you are passing a function (e.g., `onClick={() => someFunction()}`) and not a string.
+
+2. **Error in `MaterialReactTable` Component**:
+   - The error `Uncaught TypeError: Cannot read properties of undefined (reading 'forEach')` in the `MaterialReactTable` component suggests there might be an issue with how the columns or data are being passed to the table.
+   - Ensure that the `columns` array and `studentData` are correctly formatted and not undefined. Double-check the `StudentData.ts` file to ensure the data structure matches the column definitions.
+
+3. **Popup Component Import**:
+   - The import statement `import studentPopU from "./studentPopUp";` seems incorrect. It should match the filename and export of your popup component. If `studentPopU` is a component, it should be capitalized (`StudentPopUp`) to follow React component naming conventions.
+
+4. **File Naming and Structure**:
+   - Ensure that the file names are correctly referenced in your import statements. If the file structure is complex, using relative paths might lead to errors, and you might need to adjust them.
+
+5. **Use of `useState`**:
+   - You've correctly imported `useState` from React. Make sure you're using it correctly for managing the state like `showPopup`.
+
+6. **Missing Implementation**:
+   - The comments in the `handleEdit`, `handleDelete`, and `handleDetail` functions indicate these are not yet implemented. Make sure to add the appropriate logic for these functions.
+
+7. **Popup Component Usage**:
+   - The line `{showPopup && <Popup />}` suggests you're conditionally rendering a `Popup` component, but your import uses `studentPopU`. Ensure this is consistent and correctly implemented.
+
+Based on these points, carefully review your code, especially around the areas mentioned in the error messages. If the file structure is complex or if there are many components, consider breaking down the problem and testing each part individually to isolate the issue.

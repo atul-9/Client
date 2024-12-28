@@ -1,0 +1,54 @@
+/* Keep your existing styles for the sidebar */
+.sidebar {
+  position: fixed;
+  top: 76px; /* Adjust based on navbar height */
+  left: 0;
+  width: 280px; /* Adjust sidebar width when expanded */
+  height: calc(100vh - 56px); /* Subtract navbar height */
+  z-index: 1000; /* Set a high z-index value */
+}
+
+/* Styles to avoid having two scroll bars */
+body, html {
+  height: 100%;
+  margin: 0;
+  overflow: hidden; /* Prevent double scroll bars */
+}
+
+/* Set the height of the parent container to 100% */
+.parent-container {
+  height: 100%;
+}
+
+.sidebar-container {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+  position: fixed;
+  top: 56px; /* Adjust based on navbar height */
+  left: 0;
+}
+
+.sidebar-container > div {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: 100%;
+  overflow-y: auto;
+  transition: width 0.3s ease;
+  z-index: 1000; /* Set a high z-index value */
+}
+
+/* Adjust width for the collapsed state */
+.sidebar-container.collapsed > div {
+  width: 80px; /* Adjust sidebar width when collapsed */
+}
+
+.sidebar-container > div > div {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+
