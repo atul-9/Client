@@ -1,5 +1,5 @@
 import React from "react";
-import Example from "./Table";
+import Table from "./Table";
 import {
   Button,
   Card,
@@ -99,7 +99,7 @@ function ManageQuestion() {
                     <Grid container alignItems="center">
                       <Grid item xs={6}>
                         <CustomTypography variant="body1">
-                        Difficulty Level : 
+                          Difficulty Level :
                         </CustomTypography>
                       </Grid>
                       <Grid item xs={6}>
@@ -122,7 +122,7 @@ function ManageQuestion() {
                     <Grid container alignItems="center">
                       <Grid item xs={6}>
                         <CustomTypography variant=" body1">
-                        Topic :
+                          Topic :
                         </CustomTypography>
                       </Grid>
                       <Grid item xs={6}>
@@ -170,7 +170,7 @@ function ManageQuestion() {
                     <Grid container alignItems="center">
                       <Grid item xs={6}>
                         <CustomTypography variant=" body1">
-                        Creation Date from :
+                          Creation Date from :
                         </CustomTypography>
                       </Grid>
                       <Grid item xs={6}>
@@ -193,7 +193,7 @@ function ManageQuestion() {
                     <Grid container alignItems="center">
                       <Grid item xs={6}>
                         <CustomTypography variant=" body1">
-                          to : 
+                          Creation Date to :
                         </CustomTypography>
                       </Grid>
                       <Grid item xs={6}>
@@ -222,7 +222,7 @@ function ManageQuestion() {
                         size="small"
                         mt="1"
                       >
-                        Get the Students
+                        Get the Questions
                       </Button>
                     </Grid>
                   </Grid>
@@ -232,7 +232,7 @@ function ManageQuestion() {
 
             <Card sx={{ maxWidth: "100%", mt: 1, top: 2, marginTop: "2%" }}>
               <CardContent sx={{ padding: 0 }}>
-                <Example overflow="auto" style={{ padding: 0 }} />
+                <Table overflow="auto" style={{ padding: 0 }} />
               </CardContent>
             </Card>
           </Paper>
@@ -243,3 +243,237 @@ function ManageQuestion() {
 }
 
 export default ManageQuestion;
+
+// import React, { useEffect, useState } from "react";
+// import Table from "./Table"; // Ensure this is correctly pointing to your Table component
+// import {
+//   Button,
+//   Card,
+//   CardContent,
+//   Container,
+//   FormControl,
+//   Grid,
+//   MenuItem,
+//   Paper,
+//   Select,
+//   Typography,
+//   Box,
+//   styled,
+// } from "@mui/material";
+// import axios from 'axios';
+
+// function ManageQuestion() {
+//   // State hooks for filter options
+//   const [sections, setSections] = useState([]);
+//   const [difficultyLevels, setDifficultyLevels] = useState([]);
+//   const [topics, setTopics] = useState([]);
+//   const [types, setTypes] = useState([]);
+
+//   // State hooks for selected filter values
+//   const [section, setSection] = useState('');
+//   const [difficultyLevel, setDifficultyLevel] = useState('');
+//   const [topic, setTopic] = useState('');
+//   const [type, setType] = useState('');
+
+//   // State hook for storing fetched questions
+//   const [questions, setQuestions] = useState([]);
+
+//   useEffect(() => {
+//     const fetchFilterOptions = async () => {
+//       try {
+//         const sectionsRes = await axios.get('/api/sections');
+//         const difficultyLevelsRes = await axios.get('/api/difficultyLevels');
+//         const topicsRes = await axios.get('/api/topics');
+//         const typesRes = await axios.get('/api/types');
+
+//         setSections(sectionsRes.data);
+//         setDifficultyLevels(difficultyLevelsRes.data);
+//         setTopics(topicsRes.data);
+//         setTypes(typesRes.data);
+//       } catch (error) {
+//         console.error('Error fetching filter options:', error);
+//       }
+//     };
+
+//     fetchFilterOptions();
+//   }, []);
+
+//   const handleFetchQuestions = async () => {
+//     try {
+//       const { data } = await axios.get('/api/questions', {
+//         params: {
+//           section,
+//           difficultyLevel,
+//           topic,
+//           type,
+//         },
+//       });
+//       setQuestions(data);
+//     } catch (error) {
+//       console.error("Failed to fetch questions:", error);
+//       setQuestions([]);
+//     }
+//   };
+
+//   const CustomSelect = styled(Select)({
+//     "& .MuiSelect-select": {
+//       paddingTop: 4,
+//       paddingBottom: 4,
+//       marginBottom: 5,
+//     },
+//   });
+
+//   const CustomTypography = styled(Typography)({
+//     marginBottom: "0rem",
+//     marginLeft: "15%",
+//   });
+
+//   // This is where you'd add your fetch questions logic based on selected filters
+//   const handleFetchQuestions = () => {
+//     console.log("Fetching questions...");
+//     // Implement the fetching of questions here
+//   };
+
+//   return (
+//     <Container maxWidth="xl" style={{ marginLeft: "7%", marginTop: "0%" }}>
+//       <Grid item xs={12}>
+//         <Typography
+//           variant="h6"
+//           component="h2"
+//           gutterBottom
+//           style={{ marginTop: "5%", marginLeft: "12%", padding: "1%" }}
+//         >
+//           Manage Questions
+//         </Typography>
+//       </Grid>
+
+//       <Paper
+//         elevation={3}
+//         style={{
+//           padding: "2%",
+//           marginTop: "0%",
+//           marginLeft: "13%",
+//           marginRight: "7%",
+//           overflow: "auto",
+//         }}
+//       >
+//         <Card sx={{ maxWidth: "100%", mt: 0, top: 0 }}>
+//           <CardContent sx={{ padding: 2 }}>
+//             <Grid container spacing={2} alignItems="center" justifyContent="center">
+//               {/* Repeated for each filter */}
+//               <Grid item xs={6} md={3}>
+//                 <Grid container alignItems="center">
+//                   <Grid item xs={6}>
+//                     <CustomTypography variant="body1">Section</CustomTypography>
+//                   </Grid>
+//                   <Grid item xs={6}>
+//                     <FormControl fullWidth>
+//                       <CustomSelect
+//                         value={section}
+//                         onChange={(e) => setSection(e.target.value)}
+//                         displayEmpty
+//                         inputProps={{ 'aria-label': 'Without label' }}
+//                       >
+//                         <MenuItem value=""><em>None</em></MenuItem>
+//                         {sections.map((section) => (
+//                           <MenuItem key={section.id} value={section.value}>{section.label}</MenuItem>
+//                         ))}
+//                       </CustomSelect>
+//                     </FormControl>
+//                   </Grid>
+//                 </Grid>
+//               </Grid>
+// {/* Difficulty Level Filter */}
+// <Grid item xs={6} md={3}>
+//   <Grid container alignItems="center">
+//     <Grid item xs={6}>
+//       <CustomTypography variant="body1">Difficulty Level</CustomTypography>
+//     </Grid>
+//     <Grid item xs={6}>
+//       <FormControl fullWidth>
+//         <CustomSelect
+//           value={difficultyLevel}
+//           onChange={(e) => setDifficultyLevel(e.target.value)}
+//           displayEmpty
+//           inputProps={{ 'aria-label': 'Without label' }}
+//         >
+//           <MenuItem value=""><em>None</em></MenuItem>
+//           {difficultyLevels.map((level) => (
+//             <MenuItem key={level.id} value={level.value}>{level.label}</MenuItem>
+//           ))}
+//         </CustomSelect>
+//       </FormControl>
+//     </Grid>
+//   </Grid>
+// </Grid>
+
+// {/* Topic Filter */}
+// <Grid item xs={6} md={3}>
+//   <Grid container alignItems="center">
+//     <Grid item xs={6}>
+//       <CustomTypography variant="body1">Topic</CustomTypography>
+//     </Grid>
+//     <Grid item xs={6}>
+//       <FormControl fullWidth>
+//         <CustomSelect
+//           value={topic}
+//           onChange={(e) => setTopic(e.target.value)}
+//           displayEmpty
+//           inputProps={{ 'aria-label': 'Without label' }}
+//         >
+//           <MenuItem value=""><em>None</em></MenuItem>
+//           {topics.map((topic) => (
+//             <MenuItem key={topic.id} value={topic.value}>{topic.label}</MenuItem>
+//           ))}
+//         </CustomSelect>
+//       </FormControl>
+//     </Grid>
+//   </Grid>
+// </Grid>
+
+// {/* Type Filter */}
+// <Grid item xs={6} md={3}>
+//   <Grid container alignItems="center">
+//     <Grid item xs={6}>
+//       <CustomTypography variant="body1">Type</CustomTypography>
+//     </Grid>
+//     <Grid item xs={6}>
+//       <FormControl fullWidth>
+//         <CustomSelect
+//           value={type}
+//           onChange={(e) => setType(e.target.value)}
+//           displayEmpty
+//           inputProps={{ 'aria-label': 'Without label' }}
+//         >
+//           <MenuItem value=""><em>None</em></MenuItem>
+//           {types.map((type) => (
+//             <MenuItem key={type.id} value={type.value}>{type.label}</MenuItem>
+//           ))}
+//         </CustomSelect>
+//       </FormControl>
+//     </Grid>
+//   </Grid>
+// </Grid>
+
+//             </Grid>
+//             <Grid container justifyContent="center" sx={{ mt: 2 }}>
+//               <Button variant="contained" size="small" onClick={handleFetchQuestions}>
+//                 Get Questions
+//               </Button>
+//             </Grid>
+//           </CardContent>
+//         </Card>
+//         {questions.length > 0 && (
+//   <Card sx={{ maxWidth: "100%", mt: 1, top: 2, marginTop: "2%" }}>
+//   <CardContent sx={{ padding: 0 }}>
+//     <Table questions={questions} overflow="auto" style={{ padding: 0 }} />
+//   </CardContent>
+// </Card>
+// )}
+
+//       </Paper>
+//     </Container>
+//   );
+// }
+
+// export default ManageQuestion;

@@ -632,7 +632,7 @@ const cameraFrame = ()=>{
               </Grid>
               <Grid item>
                 <Typography variant="h6" fontWeight={700}>
-                  <TestTimer duration={60 *60} />
+                  <TestTimer duration={1*60} />
                 </Typography>
               </Grid>
             </Grid>

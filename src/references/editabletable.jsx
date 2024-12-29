@@ -2,21 +2,25 @@ import React from "react";
 import { MaterialReactTable } from "material-react-table";
 import { useState } from "react";
 import { Button } from "@mui/material";
-import { faker } from "@faker-js/faker";
 
-const data = [...Array(100)].map(() => ({
-  address: faker.location.streetAddress(),
-  firstName: faker.person.firstName(),
-  lastName: faker.person.lastName(),
-  phoneNumber: faker.phone.number(),
-  state: faker.location.state(),
-}));
 function EditableTable() {
-  const [tableData, setTableData] = useState(data);
+  const [tableData, setTableData] = useState([]);
+
+  // Correctly handle cell edits to update the state
   const handleSaveCell = (cell, value) => {
-    //@ts-ignore
-    tableData[cell.row.index][cell.column.id] = value;
-    setTableData([...tableData]);
+    // Create a new array with updates instead of mutating the state directly
+    const newData = tableData.map((row, index) => {
+      if (index === cell.row.index) {
+        return { ...row, [cell.column.id]: value }; // Update the cell's value
+      }
+      return row;
+    });
+    setTableData(newData); // Set the new data as the current state
+  };
+
+  // Function to handle saving new rows
+  const handleCreatingRowSave = (newRow) => {
+    setTableData(currentData => [...currentData, newRow.values]);
   };
 
   return (
@@ -24,25 +28,27 @@ function EditableTable() {
       columns={[
         {
           accessorKey: "firstName",
-          header: "First Name",
+          header: "Student Full Name",
         },
         {
           accessorKey: "lastName",
-          header: "Last Name",
+          header: "Student Personal Email",
         },
         {
           accessorKey: "address",
-          header: "Address",
+          header: "Student College Email",
         },
         {
           accessorKey: "state",
-          header: "State",
+          header:"Student Gender",
         },
         {
           accessorKey: "phoneNumber",
-          enableEditing: false,
-          header: "Phone Number",
+          enableEditing: true, // Assuming DOB is displayed but not editable
+
+          header: "Student DOB",
         },
+        
       ]}
       createDisplayMode="row"
       data={tableData}
@@ -54,9 +60,9 @@ function EditableTable() {
           handleSaveCell(cell, event.target.value);
         },
       })}
-      onCreatingRowSave={() => {}}
+      onCreatingRowSave={handleCreatingRowSave} // Use the handleCreatingRowSave function
       renderTopToolbarCustomActions={({ table }) => (
-        <Button onClick={() => table.setCreatingRow(true)}>Add</Button>
+        <Button onClick={() => table.setCreatingRow(true)}>Add Student</Button>
       )}
     />
   );

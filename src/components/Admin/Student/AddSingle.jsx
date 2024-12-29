@@ -5,14 +5,11 @@ import Paper from "@mui/material/Paper";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import TextField from "@mui/material/TextField";
-import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import Grid from "@mui/material/Grid";
 import { Typography } from "@mui/material";
-import { Hd, TvOffSharp } from "@mui/icons-material";
-import { List, ListItem } from "@mui/material";
 import FormHelperText from "@mui/material/FormHelperText";
 import Button from "@mui/material/Button";
 import { useTheme } from "@mui/material/styles";
@@ -20,52 +17,59 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useState } from "react";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { List, ListItem } from "@mui/material";
+
+import axios from "axios"; // Make sure axios is installed
+
+const DefaultTheme = createTheme();
 
 const MyList = () => {
   console.log("Entered");
   return (
-    <List
-      disablePadding={true}
-      dense={true}
-      sx={{
-        listStyleType: "disc",
-        listStylePosition: "inside",
-      }}
-      style={{ fontSize: "12px" }}
-    >
-      <ListItem sx={{ display: "list-item" }}>
-        <strong>Full Name:</strong> This field should capture the student's full
-        legal name.
-      </ListItem>
-      <ListItem sx={{ display: "list-item" }}>
-        <strong>Mobile Number:</strong> This field should capture the student's
-        mobile phone number.
-      </ListItem>
-      <ListItem sx={{ display: "list-item" }}>
-        <strong>College Email Id:</strong> This field should capture the
-        student's college email address.
-      </ListItem>
-      <ListItem sx={{ display: "list-item" }}>
-        <strong>Personal Email Id:</strong> This field should capture the
-        student's personal email address. This will be used for login.
-      </ListItem>
-      <ListItem sx={{ display: "list-item" }}>
-        <strong>Date of Birth:</strong> This field should capture the student's
-        date of birth. Use a calendar control to make it easy for users to enter
-        this information.
-      </ListItem>
-      <ListItem sx={{ display: "list-item" }}>
-        <strong>Gender:</strong> This field should capture the student's gender.
-        Use a drop-down menu with options for male, female, and other.
-      </ListItem>
-      <ListItem sx={{ display: "list-item" }}>
-        Password will be sent to the student's Personal Email address along with
-        a verification link.
-      </ListItem>
-    </List>
+    <ThemeProvider theme={DefaultTheme}>
+      <List
+        disablePadding={true}
+        dense={true}
+        sx={{
+          listStyleType: "disc",
+          listStylePosition: "inside",
+        }}
+        style={{ fontSize: "12px" }}
+      >
+        <ListItem sx={{ display: "list-item" }}>
+          <strong>Full Name:</strong> This field should capture the student's
+          full legal name.
+        </ListItem>
+        <ListItem sx={{ display: "list-item" }}>
+          <strong>Mobile Number:</strong> This field should capture the
+          student's mobile phone number.
+        </ListItem>
+        <ListItem sx={{ display: "list-item" }}>
+          <strong>College Email Id:</strong> This field should capture the
+          student's college email address.
+        </ListItem>
+        <ListItem sx={{ display: "list-item" }}>
+          <strong>Personal Email Id:</strong> This field should capture the
+          student's personal email address. This will be used for login.
+        </ListItem>
+        <ListItem sx={{ display: "list-item" }}>
+          <strong>Date of Birth:</strong> This field should capture the
+          student's date of birth. Use a calendar control to make it easy for
+          users to enter this information.
+        </ListItem>
+        <ListItem sx={{ display: "list-item" }}>
+          <strong>Gender:</strong> This field should capture the student's
+          gender. Use a drop-down menu with options for male, female, and other.
+        </ListItem>
+        <ListItem sx={{ display: "list-item" }}>
+          Password will be sent to the student's Personal Email address along
+          with a verification link.
+        </ListItem>
+      </List>
+    </ThemeProvider>
   );
 };
 
@@ -73,6 +77,15 @@ const AddSingle = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down(1000));
   const [open, setOpen] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm({
+    mode: "onChange",
+  });
 
   const handleOpen = () => {
     setOpen(true);
@@ -82,15 +95,18 @@ const AddSingle = () => {
     setOpen(false);
   };
 
-  const onSubmit = (data) => console.log(data);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    control,
-  } = useForm({
-    mode: "onChange",
-  });
+  const onSubmit = async (data) => {
+    console.log(data);
+    // Here you can implement the API call to submit the form data
+    try {
+      const response = await axios.post("http://localhost:8800/api/admin/addstudent", {name:data.fullName , email: data.personalEmail , cEmail: data.collegeEmail, mob:data.phoneNumber, dob:data.dob, gender:data.gender});
+      console.log(response.data);
+      // Handle success, such as showing a success message or redirecting the user
+    } catch (error) {
+      console.error("Failed to submit the form:", error);
+      // Handle error, such as showing an error message to the user
+    }
+  };
 
   return (
     <Container
@@ -132,11 +148,11 @@ const AddSingle = () => {
           marginBottom: "5%", // Add some bottom margin
           marginLeft: isSmallScreen ? "20%" : "25%",
 
-          // overflow: "auto", // Add overflow auto
+           overflow: "auto", // Add overflow auto
         }}
       >
         <Card style={{ flex: 1.5 }}>
-          <CardContent style={{ paddingBottom: 0 }}>
+          <CardContent style={{ paddingBottom: 0 , maxHeight:"400px",overflowY:"auto"}}>
             <Grid container spacing={0} alignItems="center">
               <Grid item xs={12} sm={4}>
                 <InputLabel htmlFor="profile" style={{ color: "black" }}>
@@ -147,6 +163,9 @@ const AddSingle = () => {
                 <TextField
                   {...register("fullName", {
                     required: "Full name is required",
+                    validate: (value) =>
+                      /^[A-Za-z ]+$/.test(value) ||
+                      "Full name must only contain letters and spaces",
                   })}
                   error={Boolean(errors.fullName)}
                   helperText={errors.fullName?.message}
@@ -311,22 +330,21 @@ const AddSingle = () => {
             direction={isSmallScreen ? "column-reverse" : "row"}
             justify="center"
             alignItems="center"
-            style={{ marginTop: "3%",  marginBottom: "35%" }}
+            style={{ marginTop: "3%", marginBottom: "35%" }}
           >
-            
-                <Grid item xs={6} sm={6}>
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    size="small"
-                    onClick={handleSubmit}
-                    style={{ marginLeft: "50%" }}
-                  >
-                    Submit
-                  </Button>
-                </Grid>
-                {isSmallScreen && (
+            <Grid item xs={6} sm={6}>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                size="small"
+                onClick={handleSubmit(onSubmit)}
+                style={{ marginLeft: "50%" }}
+              >
+                Submit
+              </Button>
+            </Grid>
+            {isSmallScreen && (
               <>
                 <Grid item xs={6} sm={12}>
                   <Button

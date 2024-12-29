@@ -21,24 +21,8 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Rnavbar from "../Global/Rnavbar";
 import Footer from "./Student/Footer";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="#">
-        Aptitude
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -55,18 +39,29 @@ export default function RegistrationForm() {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const formData={
       name: data.get("name"),
       mobilenumber: data.get("mobilenumber"),
       email: data.get("email"),
       collegeemail: data.get("collegeemail"),
       password: data.get("password"),
       confirmpassword: data.get("confirmpassword"),
-      dob: data.get("dob"), // Getting date of birth value
+      dob: data.get("dob"), 
+    };
+    console.log(formData);
+
+    const response = await fetch('https://api.example.com/register', { // Replace with your API URL
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
     });
+    const responseData = await response.json();
+    console.log(responseData);
   };
 
   return (
@@ -196,17 +191,6 @@ export default function RegistrationForm() {
                 margin="normal"
                 required
                 fullWidth
-                id="collegeemail"
-                label="College Email Address"
-                name="collegeemail"
-                autoComplete="email"
-                autoFocus
-                size="small"
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
                 name="password"
                 label="Password"
                 type={showPassword ? "text" : "password"}
@@ -260,11 +244,6 @@ export default function RegistrationForm() {
                   ),
                 }}
               />
-              <FormControlLabel
-                sx={{ alignItems: "left" }}
-                control={<Checkbox value="showpassw" color="primary" />}
-                label="Show Password"
-              />
               {/* Inserting Date of Birth input field */}
               <Grid container spacing={1} alignItems="center">
                 <Grid item xs={6}>
@@ -283,17 +262,21 @@ export default function RegistrationForm() {
                   />
                 </Grid>
                 <Grid item xs={6}>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="gender"
-                    label="Gender"
-                    name="gender"
-                    autoComplete="gender"
-                    autoFocus
-                    size="small"
-                  />
+                  <FormControl fullWidth>
+                    <InputLabel id="gender-label">Gender</InputLabel>
+                    <Select
+                      labelId="gender-label"
+                      id="gender"
+                      name="gender"
+                      autoComplete="gender"
+                      autoFocus
+                      size="small"
+                    >
+                      <MenuItem value="Male">Male</MenuItem>
+                      <MenuItem value="Female">Female</MenuItem>
+                      <MenuItem value="Others">Others</MenuItem>
+                    </Select>
+                  </FormControl>
                 </Grid>
               </Grid>
 
@@ -301,26 +284,10 @@ export default function RegistrationForm() {
                 type="submit"
                 fullWidth
                 variant="contained"
-                onClick={() => {
-                  window.location.href = "/login";
-                }}
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                Register
               </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
-              <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
         </Grid>

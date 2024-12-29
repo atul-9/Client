@@ -41,149 +41,183 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function login() {
-
   const [showPassword, setShowPassword] = useState(false);
-  const handleTogglePasswordVisibility = (field) => {
-    if (field === 'password') {
-      setShowPassword(!showPassword);
-    }
-    
+
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
-
-
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    // Log for demonstration, replace with your API call
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+      email: data.get("email"),
+      password: data.get("password"),
     });
 
-    
+    // Example API call
+    try {
+      const response = await axios.post('/api/login', {
+        email: data.get("email"),
+        password: data.get("password"),
+      });
+      console.log(response.data);
+      // Handle successful login here, such as redirecting to another page or storing the login token
+    } catch (error) {
+      console.error("Login error:", error.response.data);
+      // Handle login error here, such as displaying an error message to the user
+    }
   };
 
   return (
     <ThemeProvider theme={defaultTheme}>
-    <div style={{overflowY:"auto",height:"100vh"}}>
-    <Rnavbar/>
-      <Grid container component="main" sx={{ marginTop:"3rem" }}>
-        <CssBaseline />
-        <Grid
-          item
-          // xs={false}
-          xs={12}
-          sm={12}
-          md={7}
-          sx={{
-           
-            // my: 1,
-            // mx: 4,
-            display: 'flex',
-            // flexDirection: 'column',
-            justifyContent:"center",
-            alignItems: 'center'
-            
-          }}
-        >
-           <Box sx={{
-            my: 1,
-            mx: 4,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent:"center",
-            alignItems: 'center'
-          }} >
-            <Typography component="h1" variant="h2" >
-            {/* text added  */}
-              Aptitude
-            </Typography>
-            <Typography component="h1" variant="h4"  sx={{mx:0, color:"#0000FF", fontWeight:'600'}} >
-              for your personal growth
-            </Typography>
-            <Typography component="h1" variant="h6" sx={{mx:0, fontWeight:'500'}} >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero voluptates est iste tenetur eligendi fuga maiores, praesentium enim ipsa facilis asperiores vitae!
-            </Typography>
-          </Box>
-       </Grid>
-        <Grid item xs={12} sm={12} md={5} component={Paper} elevation={6} square>
-          <Box
+      <div style={{ overflowY: "auto", height: "100vh" }}>
+        <Rnavbar />
+        <Grid container component="main" sx={{ marginTop: "3rem" }}>
+          <CssBaseline />
+          <Grid
+            item
+            // xs={false}
+            xs={12}
+            sm={12}
+            md={7}
             sx={{
-              my: 8,
-              mx: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              // justifyContent:"center",
-              alignItems: 'center',
+              // my: 1,
+              // mx: 4,
+              display: "flex",
+              // flexDirection: 'column',
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                size="small"
-              />
-               <TextField
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="Password"
-          type={showPassword ? 'text' : 'password'}
-          id="password"
-          autoComplete="current-password"
-          size="small"
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  onClick={() => handleTogglePasswordVisibility('password')}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-              <FormControlLabel sx={{alignItems: 'left'}}
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+            <Box
+              sx={{
+                my: 1,
+                mx: 4,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Typography component="h1" variant="h2">
+                {/* text added  */}
+                Aptitude
+              </Typography>
+              <Typography
+                component="h1"
+                variant="h4"
+                sx={{ mx: 0, color: "#0000FF", fontWeight: "600" }}
               >
-                Sign In
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
-              <Copyright sx={{ mt: 5 }} />
+                for your personal growth
+              </Typography>
+              <Typography
+                component="h1"
+                variant="h6"
+                sx={{ mx: 0, fontWeight: "500" }}
+              >
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero
+                voluptates est iste tenetur eligendi fuga maiores, praesentium
+                enim ipsa facilis asperiores vitae!
+              </Typography>
             </Box>
-          </Box>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={5}
+            component={Paper}
+            elevation={6}
+            square
+          >
+            <Box
+              sx={{
+                my: 8,
+                mx: 4,
+                display: "flex",
+                flexDirection: "column",
+                // justifyContent:"center",
+                alignItems: "center",
+              }}
+            >
+              <Box
+                component="form"
+                noValidate
+                onSubmit={handleSubmit}
+                sx={{ mt: 1 }}
+              >
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  size="small"
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  autoComplete="current-password"
+                  size="small"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={() =>
+                            handleTogglePasswordVisibility("password")
+                          }
+                          edge="end"
+                        >
+                          {showPassword ? (
+                            <VisibilityOffIcon />
+                          ) : (
+                            <VisibilityIcon />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                <FormControlLabel
+                  sx={{ alignItems: "left" }}
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Remember me"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Sign In
+                </Button>
+                <Grid container>
+                  <Grid item xs>
+                    <Link href="#" variant="body2">
+                      Forgot password?
+                    </Link>
+                  </Grid>
+                  <Grid item>
+                    <Link href="#" variant="body2">
+                      {"Don't have an account? Sign Up"}
+                    </Link>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Box>
+          </Grid>
         </Grid>
-      </Grid>
-      <Footer/>
+        <Footer />
       </div>
     </ThemeProvider>
   );

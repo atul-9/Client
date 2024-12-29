@@ -1,15 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-
+import * as XLSX from 'xlsx';
 import EditableTable from "../../../references/editabletable";
+import axios from 'axios';
 
 const PageContainer = styled.div`
   display: flex;
@@ -94,10 +91,49 @@ const ButtonStyled = styled.button`
 `;
 
 const AddMultipleStudent = () => {
-  const [collapse, setCollapse] = useState(false);
-  const handleToggleCollapse = () => setCollapse(!collapse);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const downloadTemplate = async () => {
+    try {
+      const response = await axios.get('YOUR_API_ENDPOINT', {
+        responseType: 'blob', // Important to process the file download
+      });
+      
+      // Create a URL for the blob
+      const fileURL = window.URL.createObjectURL(new Blob([response.data]));
+      
+      // Create a temporary anchor element and trigger the download
+      const fileLink = document.createElement('a');
+      fileLink.href = fileURL;
+      fileLink.setAttribute('download', 'StudentTemplate.xlsx'); // Specify the file name
+      document.body.appendChild(fileLink);
+      
+      fileLink.click();
+  
+      // Clean up by removing the temporary anchor element
+      fileLink.parentNode.removeChild(fileLink);
+  
+    } catch (error) {
+      console.error("There was an error downloading the template:", error);
+      // Handle any errors here, such as showing a notification to the user
+    }
+  };
+
+  const handleImportExcel = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const data = e.target.result;
+      const workbook = XLSX.read(data, { type: 'binary' });
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+      const json = XLSX.utils.sheet_to_json(worksheet);
+      // Assuming EditableTable component can take imported rows as props
+      // updateRows(json); This should be a function to pass data to the EditableTable
+    };
+    reader.readAsBinaryString(file);
+  };
 
   return (
     <PageContainer>
@@ -123,15 +159,15 @@ const AddMultipleStudent = () => {
       <MainFrame
         style={{ backgroundColor: "white", marginLeft: "20%", display: "flow" }}
       >
-        <h3
+        <h6
           className="left-corner-heading"
-          style={{ textAlign: "left", marginTop: "1%" }}
+          style={{ textAlign: "left", marginTop: "0%" , marginBottom:"3%"}}
         >
           Import from Excel file
-        </h3>
+        </h6>
         <CardsContainer>
           <CardStyled>
-            <ButtonStyled onClick={() => {}}>
+          <ButtonStyled onClick={downloadTemplate}>
               Download Template File
             </ButtonStyled>
             <InstructionsList>
@@ -145,9 +181,10 @@ const AddMultipleStudent = () => {
             </InstructionsList>
           </CardStyled>
           <CardStyled>
-            <ButtonStyled onClick={() => {}}>
+          <ButtonStyled onClick={() => document.getElementById('excel-upload').click()}>
               Import data from file
             </ButtonStyled>
+            <input type="file" id="excel-upload" style={{ display: 'none' }} onChange={handleImportExcel} accept=".xlsx, .xls"/>
             <InstructionsList>
               <li>Click "Import from Excel file" and select saved file.</li>
               <li>Upload opens, choose saved Excel file.</li>
@@ -159,12 +196,12 @@ const AddMultipleStudent = () => {
             </InstructionsList>
           </CardStyled>
         </CardsContainer>
-        <h3
+        <h6
           className="left-corner-heading"
           style={{ textAlign: "left", marginTop: "10px", marginBottom: "10px" }}
         >
           or just manually enter your data here...
-        </h3>
+        </h6>
         <div style={{ overflowX: "auto" }}>
           <TableContainer>
             <EditableTable /> {/* Use the EditableTable component */}

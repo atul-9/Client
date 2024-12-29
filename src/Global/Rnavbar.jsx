@@ -43,6 +43,15 @@ const Rnavbar = () => {
           >
             Contact Us
           </Button>
+          <Button
+            color="inherit"
+            component={Link}
+            to="/feedback"
+            sx={{ fontWeight: activeLink === "feedback" ? "600" : "500", marginLeft: "1rem" }}
+            onClick={() => setActiveLink("feedback")}
+          >
+            Feedback
+          </Button>
         </Typography>
         
         {/* Navigation links */}
@@ -58,7 +67,7 @@ const Rnavbar = () => {
         <Button
           color="inherit"
           component={Link}
-          to="/"
+          to="/registration"
           sx={{ fontWeight: activeLink === "registration" ? "600" : "500", marginLeft: "2rem" }}
           onClick={() => setActiveLink("registration")}
         >

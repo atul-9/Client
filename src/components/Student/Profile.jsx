@@ -1054,12 +1054,23 @@ export default function Profile() {
                         <Button
                           type="submit"
                           variant="contained"
-                          style={{ marginLeft: "35%", marginBottom: "2%" }}
+                          style={{ marginLeft: "35%" }}
                           onClick={handleClickOpen}
                         >
                           Update Password
                         </Button>
                       </Grid>
+                    </CardContent>
+                    <CardContent style={{ paddingBottom: 0 }}>
+                                          <Grid container spacing={0} alignItems="center">
+                                         <Button
+                                               type="submit"
+                                              variant="contained"
+                                               style={{ marginLeft: "45%" , marginBottom: "2%"}}
+                                             >
+                                            Edit
+                                            </Button>
+                                       </Grid>
                     </CardContent>
 
                     <Dialog open={open} onClose={handleClose}>

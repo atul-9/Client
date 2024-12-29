@@ -19,6 +19,9 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Radio from '@mui/material/Radio';
 
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { tokens, themeSettings } from "../../../theme.js";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -37,7 +40,10 @@ export default function Popup({ isopen, inhandleClose, row,iseditable }) {
   // const handleOpen = () => setOpen(true);
   // const handleClose = () => setOpen(inhandleClose);
   console.log(row);
+
+  const theme = createTheme(themeSettings('light'));
   return (
+    <ThemeProvider theme={theme}>
     <div>
       {/* <Button variant="contained" onClick={handleOpen}>
         Open Popup
@@ -593,5 +599,6 @@ export default function Popup({ isopen, inhandleClose, row,iseditable }) {
         </Box>
       </Modal>
     </div>
+    </ThemeProvider>
   );
 }
